@@ -1,0 +1,29 @@
+nav{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-bottom: 1px solid white;
+}
+
+.brand_name{
+    /* border: 1px solid green; */
+    margin-left: 20px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.nav_items{
+     /* border: 1px solid yellow; */
+     margin-right: 20px;
+}
+
+.item{
+     /* border: 1px solid blueviolet; */
+     margin: 5px;
+     margin-right: 10px;
+     font-weight: 500;
+     font-size: 1.1rem;
+}
