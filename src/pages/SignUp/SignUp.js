@@ -1,30 +1,56 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 // import styles from "./SignUp.module.css";
+import { handleSignUp } from "../../auth";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [signUpDetail, setSignUpDetail] = useState({
-    email:'',
-    password:''
-  })
+    email: "",
+    password: "",
+  });
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSignUpDetail((pv) => ({ ...pv, [name]: value }));
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(emailRef.current.value, passwordRef.current.value);
-    
-    setSignUpDetail({
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
-  }
+
+    const res = await handleSignUp(signUpDetail);
+
+    if (res) {
+      // console.log(error);
+      setSignUpDetail({ email: "", password: "" });
+      alert("user Created successfully");
+      navigate("/signin");
+    } else {
+      alert("error occured user not Created");
+    }
+  };
   return (
     <div className="form_wrapper">
       <form className="form_container" onSubmit={handleSubmit}>
         <h2 className="heading">SignUp Form</h2>
-        <input type='email' placeholder="email" name="email" id="email" ref={emailRef} required />
-        <input type="password" placeholder="password" name="password" id="password" ref={passwordRef} required />
+        <input
+          type="email"
+          placeholder="email"
+          name="email"
+          id="email"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          placeholder="password(min. 6 characters req.)"
+          name="password"
+          id="password"
+          pattern=".{6,}"
+          title="Must contain at least 6 characters"
+          onChange={handleChange}
+          required
+        />
         <button type="submit" className="btn btn-outline-secondary">
           Submit
         </button>
