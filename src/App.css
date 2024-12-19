@@ -49,3 +49,42 @@ button {
   margin-left: 60px;
   background-color: blue;
 }
+
+
+/* home page styling */
+
+.home_container{
+border: 2px solid yellow;
+}
+
+.cards_container{
+  border: 2px solid red;
+  display: flex;
+
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10vh;
+}
+
+/* card styling */
+.card_cont{
+  width: 18vw;
+  height: fit-content;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: 1rem;
+}
+
+.img_cont{
+  width:100%;
+  /* height: ; */
+}
+
+.card_body{
+  border: 2px solid yellow;
+  padding: 10px 10px 0;
+}
+
+.shop_btn{
+
+}

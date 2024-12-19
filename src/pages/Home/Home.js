@@ -1,9 +1,18 @@
 import React from 'react'
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { products } from '../../data';
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
+    <div className=" home_container">
+      <div className=" container cards_container">
+        {products.map((p, id) => {
+          return <ProductCard details={p}/>;
+        })}
+      
+      </div>
+    </div>
+  );
 }
 
 export default Home
