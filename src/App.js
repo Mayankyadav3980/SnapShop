@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import "./App.css";
+import { CustomUserContext } from "./userContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,7 +23,9 @@ function App() {
   ]);
   return (
     <>
-      <RouterProvider router={router}/>
+      <CustomUserContext>
+        <RouterProvider router={router} />
+      </CustomUserContext>
     </>
   );
 }

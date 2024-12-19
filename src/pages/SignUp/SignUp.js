@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import styles from "./SignUp.module.css";
 import { handleSignUp } from "../../auth";
 import { useNavigate } from "react-router-dom";
+import { useUserDetails } from "../../userContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const {userDetails, setUserDetails} = useUserDetails();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,9 +20,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await handleSignUp(signUpDetail);
+    const obj = await handleSignUp(signUpDetail);
+    setUserDetails(obj.res);
+    // console.log(userDetails);
+    
 
-    if (res) {
+    if (obj.status==='success') {
       // console.log(error);
       setSignUpDetail({ email: "", password: "" });
       alert("user Created successfully");

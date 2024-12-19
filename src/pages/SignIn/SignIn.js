@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../auth";
+import { useUserDetails } from "../../userContext";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -9,11 +10,16 @@ const SignIn = () => {
     password: "",
   });
 
+  const {userDetails, setUserDetails} = useUserDetails();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await handleSignIn(signInDetail)
     
-    if(res) navigate('/Home');
+    if(res) { 
+      // console.log(userDetails);
+      navigate('/Home')
+    }
     else alert('Invalid Credential, Please try agian')
   };
 
