@@ -96,3 +96,9 @@ button {
 .shop_btn{
 
 }
+
+/* cart page styling */
+
+.cart_cont{
+  border: 1px solid yellow;
+}

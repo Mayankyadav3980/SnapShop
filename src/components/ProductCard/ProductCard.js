@@ -1,7 +1,16 @@
 import React from "react";
+import { useUserDetails } from "../../userContext";
 
-const ProductCard = ({ details }) => {
+const ProductCard = ({ details, addProductToCart }) => {
   const { id, name, des, price, category, stock, rating, img, tags } = details;
+  const {userDetails, setUserDetails} = useUserDetails();
+
+  const handleAddToCart = () => {
+    // console.log(userDetails);
+    addProductToCart(id);
+    
+  }
+
   return (
     <div className="card_cont">
       <div className="img_cont">
@@ -14,7 +23,7 @@ const ProductCard = ({ details }) => {
         </div>
 
         <p>${price}</p>
-        <button className="btn btn-light shop_btn">Add to Cart</button>
+        <button className="btn btn-light shop_btn" onClick={handleAddToCart}>Add to Cart</button>
       </div>
     </div>
   );

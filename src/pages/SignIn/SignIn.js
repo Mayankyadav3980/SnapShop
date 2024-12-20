@@ -10,17 +10,21 @@ const SignIn = () => {
     password: "",
   });
 
-  const {userDetails, setUserDetails} = useUserDetails();
+  const { userDetails, setUserDetails } = useUserDetails();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await handleSignIn(signInDetail)
-    
-    if(res) { 
-      // console.log(userDetails);
-      navigate('/Home')
-    }
-    else alert('Invalid Credential, Please try agian')
+    const obj = await handleSignIn(signInDetail);
+
+    if (obj.status) {
+      setUserDetails({
+        uId: obj.res,
+        uEmail: signInDetail.email,
+        uPassward: signInDetail.password,
+      });
+
+      navigate("/Home");
+    } else alert("Invalid Credential, Please try agian");
   };
 
   const handleChange = (e) => {

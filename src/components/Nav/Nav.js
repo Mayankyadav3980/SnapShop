@@ -11,7 +11,9 @@ const Nav = () => {
           <span className={styles.item}>
             <NavLink to="/home">Home</NavLink>
           </span>
-          <span className={styles.item}>Cart</span>
+          <span className={styles.item}>
+            <NavLink to="/cart">Cart</NavLink>
+          </span>
           <span className={styles.item}>Orders</span>
           <span className={styles.item}>
             <NavLink to="/signin">LogIn</NavLink>

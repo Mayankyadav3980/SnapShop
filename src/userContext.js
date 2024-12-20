@@ -4,6 +4,8 @@ const userContext = createContext();
 
 export const useUserDetails = () => {
     const values = useContext(userContext);
+    // console.log(values);
+    
     return values;
 }
 

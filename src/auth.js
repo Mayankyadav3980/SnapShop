@@ -27,8 +27,8 @@ export const handleSignIn = async (userDetails) => {
   const { email, password } = userDetails;
   try {
    const signedInRes= await signInWithEmailAndPassword(auth, email, password);
-    console.log("userSI", signedInRes);
-    return true;
+    // console.log("userSI", signedInRes._tokenResponse.localId);
+    return {res: signedInRes._tokenResponse.localId, status: true};
   } catch (err) {
     console.log("error occured: user not signedIn, " + err);
   }

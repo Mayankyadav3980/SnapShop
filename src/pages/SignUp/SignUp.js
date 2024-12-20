@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { handleSignUp } from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { useUserDetails } from "../../userContext";
+import { db } from "../../firebaseInit";
+import { setDoc, doc } from "firebase/firestore";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -17,16 +19,26 @@ const SignUp = () => {
     setSignUpDetail((pv) => ({ ...pv, [name]: value }));
   };
 
+  const addUserToDb =  async (uid) => {
+    // console.log(uid, signUpDetail.email);
+    
+    const docRef = doc(db, 'users', uid);
+    await setDoc(docRef, {userEmail: signUpDetail.email, cartItems:[]})
+    // console.log('user created successfully in fs');
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const obj = await handleSignUp(signUpDetail);
-    setUserDetails(obj.res);
+    // setUserDetails({uid:obj.res, uemail:signUpDetail.email});
     // console.log(userDetails);
     
 
     if (obj.status==='success') {
       // console.log(error);
+      await addUserToDb(obj.res._tokenResponse.localId);
       setSignUpDetail({ email: "", password: "" });
       alert("user Created successfully");
       navigate("/signin");
