@@ -2,7 +2,8 @@ import React from 'react'
 import styles from './Nav.module.css'
 import { Outlet, NavLink } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = ({setIsUserLoggedIn}) => {
+  
   return (
     <>
       <nav>
@@ -18,7 +19,8 @@ const Nav = () => {
           <span className={styles.item}>
             <NavLink to="/signin">LogIn</NavLink>
           </span>
-          <span className={styles.item}>LogOut</span>
+          <span className={styles.item} onClick={()=>{setIsUserLoggedIn(false);console.log('userIsLoggedOut');
+          }}>LogOut</span>
           <span className={styles.item}>
             <NavLink to="/">SignUp</NavLink>
           </span>

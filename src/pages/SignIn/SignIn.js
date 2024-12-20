@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../auth";
 import { useUserDetails } from "../../userContext";
 
-const SignIn = () => {
+const SignIn = ({ setIsUserLoggedIn }) => {
   const navigate = useNavigate();
   const [signInDetail, setsignInDetail] = useState({
     email: "",
@@ -22,7 +22,7 @@ const SignIn = () => {
         uEmail: signInDetail.email,
         uPassward: signInDetail.password,
       });
-
+      setIsUserLoggedIn(true);
       navigate("/Home");
     } else alert("Invalid Credential, Please try agian");
   };
