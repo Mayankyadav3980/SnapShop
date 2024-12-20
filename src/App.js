@@ -19,7 +19,12 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Nav setIsUserLoggedIn={setIsUserLoggedIn} />,
+      element: (
+        <Nav
+          isUserLoggedIn={isUserLoggedIn}
+          setIsUserLoggedIn={setIsUserLoggedIn}
+        />
+      ),
       children: [
         { index: true, element: <SignUp /> },
         {

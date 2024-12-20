@@ -31,5 +31,6 @@ export const handleSignIn = async (userDetails) => {
     return {res: signedInRes._tokenResponse.localId, status: true};
   } catch (err) {
     console.log("error occured: user not signedIn, " + err);
+    return { res: null, status: false };
   }
 };
