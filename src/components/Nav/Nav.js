@@ -26,6 +26,10 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
           {isUserLoggedIn && <span className={styles.item}>Orders</span>}
 
           <span className={styles.item}>
+            <NavLink to="/">SignUp</NavLink>
+          </span>
+          
+          <span className={styles.item}>
             <NavLink to="/signin">SignIn</NavLink>
           </span>
 
@@ -39,10 +43,6 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
               SignOut
             </span>
           )}
-
-          <span className={styles.item}>
-            <NavLink to="/">SignUp</NavLink>
-          </span>
         </div>
       </nav>
       <Outlet />

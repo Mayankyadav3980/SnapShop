@@ -3,21 +3,30 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { useCartItems } from "../../cartContext";
 
 const Cart = () => {
-
-  //initially cartItems is an empty array
-  const { cartItems, removeProductFromCart } = useCartItems();
-//   console.log('inside card component ',removeProductFromCart);
-  
+  const { cartItems } = useCartItems();
+  const len = cartItems.length;
+   const totalAmount=0;
+  if(len){
+    //  totalAmount = cartItems.reduce()
+  }
 
   return (
     <div className="container cart_cont">
-      {cartItems.map((p, idx) => (
-        <ProductCard
-          key={idx}
-          details={p}
-          removeProductFromCart={removeProductFromCart}
-        />
-      ))}
+      {!len ? (
+        <h1> Your cart is empty!!</h1>
+      ) : (
+        <div className=" inner_cart_cont">
+          <div className="cart_card_container">
+            {cartItems.map((p, idx) => (
+              <ProductCard key={idx} details={p} />
+            ))}
+          </div>
+          <div className="checkout_div">
+            Total Amount: {totalAmount}
+            <button>Buy</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

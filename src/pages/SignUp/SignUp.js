@@ -68,9 +68,11 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit" className="btn btn-outline-secondary">
-          Submit
-        </button>
+        <div style={{ textAlign: "center" }}>
+          <button type="submit" className="btn btn-outline-secondary">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

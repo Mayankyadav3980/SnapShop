@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useUserDetails } from "../../userContext";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { GrSubtractCircle } from "react-icons/gr";
+import { useCartItems } from "../../cartContext";
 
+const ProductCard = ({ details }) => {
+  const { userDetails, setUserDetails } = useUserDetails();
+  const { removeProductFromCart, addProductToCart, handleProductQuantity } =
+    useCartItems();
+  const [prdtCount, setPrdtCount] = useState(1);
 
-const ProductCard = ({ details, addProductToCart, removeProductFromCart }) => {
-   const { userDetails, setUserDetails } = useUserDetails();
-  if(!details) return;
-  const { id, name, des, price, category, stock, rating, img, tags, inCart } =
-    details;
-  // console.log(inCart);
+  if (!details) return;
+  const { id, name, price, rating, img, inCart, qty } = details;
+  // console.log(qty);
   
- 
 
   const handleAddToCart = () => {
-    // console.log('inside handleAddToCart',userDetails, id);
     addProductToCart(id);
   };
 
@@ -31,19 +34,39 @@ const ProductCard = ({ details, addProductToCart, removeProductFromCart }) => {
           <span> ⭐️ {rating}</span>
         </div>
 
-        <p>${price}</p>
-        {inCart ? (
-          <button
-            className="btn btn-light shop_btn"
-            onClick={handleRemoveFromCart}
-          >
-            Remove from Cart
-          </button>
-        ) : (
-          <button className="btn btn-light shop_btn" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
-        )}
+        <div className="price">
+          <p>${price}</p>
+          {inCart && (
+            <div className="prdt_count">
+              <GrSubtractCircle
+                onClick={() => handleProductQuantity("dec", id)}
+                className="inc_icon"
+              />
+              <p>{qty}</p>
+              <IoMdAddCircleOutline
+                onClick={() => handleProductQuantity("inc", id)}
+                className="inc_icon"
+              />
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          {inCart ? (
+            <button
+              className="btn btn-light shop_btn"
+              onClick={handleRemoveFromCart}
+            >
+              Remove from Cart
+            </button>
+          ) : (
+            <button
+              className="btn btn-light shop_btn"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
