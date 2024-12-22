@@ -1,45 +1,69 @@
 import React from "react";
-import styles from "./Nav.module.css";
-import { Outlet, NavLink } from "react-router-dom";
+// import styles from "./Nav.module.css";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import { useCartItems } from "../../cartContext";
+import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { IoLogInSharp } from "react-icons/io5";
+import { BiLogIn } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
+import { AiOutlineLogin } from "react-icons/ai";
+
+
+
+
+
 
 const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
   const { cartItems } = useCartItems();
   return (
     <>
       <nav>
-        <h3 className={styles.brand_name}>CloudMart</h3>
-        <div className={styles.nav_items}>
+        <h3 className="brand_name">CloudMart</h3>
+        <div className="nav_items">
           {isUserLoggedIn && (
-            <span className={styles.item}>
-              <NavLink to="/home">Home</NavLink>
+            <span className="item">
+              <NavLink to="/home" className="nav_link">
+                <FaHome />
+                Home
+              </NavLink>
             </span>
           )}
 
           {isUserLoggedIn && (
-            <span className={styles.item}>
-              <NavLink to="/cart">Cart </NavLink>
-              {cartItems.length}
+            <span className="item">
+              <NavLink to="/cart" className="nav_link">
+                <FaShoppingCart />
+                Cart{" "}
+              </NavLink>
+              <span style={{ fontSize: "0.9rem" }}>
+                {cartItems.length > 0 && cartItems.length}
+              </span>
             </span>
           )}
 
-          {isUserLoggedIn && <span className={styles.item}>Orders</span>}
 
-          <span className={styles.item}>
-            <NavLink to="/">SignUp</NavLink>
+          <span className="item">
+            <NavLink to="/" className="nav_link">
+             <AiOutlineLogin/>
+              SignUp
+            </NavLink>
           </span>
-          
-          <span className={styles.item}>
-            <NavLink to="/signin">SignIn</NavLink>
+
+          <span className="item">
+            <NavLink to="/signin" className="nav_link">
+              <BiLogIn />
+              SignIn
+            </NavLink>
           </span>
 
           {isUserLoggedIn && (
             <span
-              className={styles.item}
               onClick={() => {
                 setIsUserLoggedIn(false);
               }}
+              className="nav_link item"
             >
+              <BiLogOut/>
               SignOut
             </span>
           )}

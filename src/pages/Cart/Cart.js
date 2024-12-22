@@ -3,11 +3,21 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import { useCartItems } from "../../cartContext";
 
 const Cart = () => {
-  const { cartItems } = useCartItems();
+  const { cartItems, getCartItems, emptyCart } = useCartItems();
+    useEffect(() => {
+      getCartItems();
+    }, []);
   const len = cartItems.length;
-   const totalAmount=0;
-  if(len){
-    //  totalAmount = cartItems.reduce()
+  let totalAmount = 0;
+  if (len) {
+    totalAmount = cartItems.reduce((acc, prdt) => {
+      return acc + prdt.price * prdt.qty;
+    }, 0);
+  }
+
+  const handleBuy = () => {
+    emptyCart();
+    alert('Your Purchase was completed, Thanks');
   }
 
   return (
@@ -22,8 +32,8 @@ const Cart = () => {
             ))}
           </div>
           <div className="checkout_div">
-            Total Amount: {totalAmount}
-            <button>Buy</button>
+            Total Amount: ${Math.round(totalAmount)}
+            <button className="buy_btn" onClick={handleBuy}>Buy</button>
           </div>
         </div>
       )}

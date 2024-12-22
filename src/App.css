@@ -3,6 +3,57 @@ body {
   color: white;
 }
 
+/* navbar styling */
+
+.nav_link{
+    text-decoration: none;
+    color: white;
+}
+
+.nav_link:hover{
+    text-decoration: none;
+    color: rgb(185, 174, 174);
+    /* font-size: 1.2rem; */
+}
+
+.is_active{
+  font-size: 1.2rem;
+  color: rgb(185, 174, 174);
+}
+
+nav{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    border-bottom: 1px solid white;
+    position: sticky;
+}
+
+.brand_name{
+    /* border: 1px solid green; */
+    margin-left: 20px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    font-size: 1.6rem;
+}
+
+.nav_items{
+     /* border: 1px solid yellow; */
+     margin-right: 35px;
+}
+
+.item{
+     /* border: 1px solid blueviolet; */
+     margin: 5px;
+     margin-right: 20px;
+     font-weight: 500;
+     font-size: 1.1rem;
+     cursor: pointer;
+}
+
+
 /* signup page css*/
 .form_wrapper {
   /* border: 1px solid red; */
@@ -42,12 +93,12 @@ input {
 }
 
 button {
-  border: 3px solid yellow;
-  display: block;
+  /* border: 3px solid yellow; */
+  /* display: block; */
   width: 70%;
   margin: 20px auto;
   /* margin-left: 60px; */
-  background-color: blue;
+  /* background-color: blue; */
 }
 
 /* home page styling */
@@ -111,6 +162,7 @@ button {
 .inc_icon{
   font-size: 1.5rem;
   margin: 0 5px;
+  cursor: pointer;
 }
 
 .shop_btn {
@@ -119,19 +171,23 @@ button {
 /* cart page styling */
 
 .cart_cont{
-  border: 1px solid yellow;
-  display: flex;
+  /* border: 1px solid yellow; */
+  text-align: center;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-   margin-top: 10vh;
+  justify-content: center; */
+   margin-top: 5vh;
 }
 
 .inner_cart_cont{
-   border: 1px solid green;
+   /* border: 1px solid green; */
+    display: flex;
+    justify-content: space-between;
+    /* position: relative; */
 }
 .cart_card_container {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -139,9 +195,34 @@ button {
 }
 
 .checkout_div{
-  width: 30vw;
-  margin: 30px auto;
+  width: 25vw;
+  height: 20vh;
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  /* margin: 30px auto; */
   border-radius: 10px;
   background-color: white;
+  color: black;
+  /* position: absolute; */
+  /* right: 0; */
+  /* top: 0; */
+}
+
+.buy_btn{
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 50%;
+  margin-top: 20px ;
+
+}
+
+.buy_btn:hover{
+  background-color: transparent;
   color: black;
 }

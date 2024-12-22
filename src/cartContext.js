@@ -81,6 +81,12 @@ export const CustomCartContext = ({ children }) => {
     });
   };
 
+  const emptyCart = async() => {
+     await updateDoc(docRef, {
+       cartItems: [],
+     });
+  }
+
   return (
     <cartContext.Provider
       value={{
@@ -91,6 +97,7 @@ export const CustomCartContext = ({ children }) => {
         removeProductFromCart,
         isProductInCart,
         handleProductQuantity,
+        emptyCart,
       }}
     >
       {children}
