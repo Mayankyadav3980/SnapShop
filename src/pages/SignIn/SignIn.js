@@ -10,7 +10,7 @@ const SignIn = ({ setIsUserLoggedIn }) => {
     password: "",
   });
 
-  const { userDetails, setUserDetails } = useUserDetails();
+  const { setUserDetails } = useUserDetails();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +20,6 @@ const SignIn = ({ setIsUserLoggedIn }) => {
       setUserDetails({
         uId: obj.res,
         uEmail: signInDetail.email,
-        uPassward: signInDetail.password,
       });
       setIsUserLoggedIn(true);
       navigate("/Home");
@@ -35,7 +34,7 @@ const SignIn = ({ setIsUserLoggedIn }) => {
   return (
     <div className="form_wrapper">
       <form className="form_container" onSubmit={handleSubmit}>
-        <h2 className="heading">SignIn Form</h2>
+        <h2 className="heading">Sign In Form</h2>
         <input
           type="text"
           placeholder="email"

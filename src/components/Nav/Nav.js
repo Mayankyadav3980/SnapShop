@@ -1,17 +1,10 @@
 import React from "react";
-// import styles from "./Nav.module.css";
-import { Outlet, NavLink, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import { useCartItems } from "../../cartContext";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
-import { IoLogInSharp } from "react-icons/io5";
 import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineLogin } from "react-icons/ai";
-
-
-
-
-
 
 const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
   const { cartItems } = useCartItems();
@@ -41,20 +34,23 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
             </span>
           )}
 
+          {!isUserLoggedIn && (
+            <>
+              <span className="item">
+                <NavLink to="/" className="nav_link">
+                  <AiOutlineLogin />
+                  SignUp
+                </NavLink>
+              </span>
 
-          <span className="item">
-            <NavLink to="/" className="nav_link">
-             <AiOutlineLogin/>
-              SignUp
-            </NavLink>
-          </span>
-
-          <span className="item">
-            <NavLink to="/signin" className="nav_link">
-              <BiLogIn />
-              SignIn
-            </NavLink>
-          </span>
+              <span className="item">
+                <NavLink to="/signin" className="nav_link">
+                  <BiLogIn />
+                  SignIn
+                </NavLink>
+              </span>
+            </>
+          )}
 
           {isUserLoggedIn && (
             <span
@@ -63,7 +59,7 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
               }}
               className="nav_link item"
             >
-              <BiLogOut/>
+              <BiLogOut />
               SignOut
             </span>
           )}

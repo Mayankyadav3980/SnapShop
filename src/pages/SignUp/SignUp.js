@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-// import styles from "./SignUp.module.css";
 import { handleSignUp } from "../../auth";
 import { useNavigate } from "react-router-dom";
-import { useUserDetails } from "../../userContext";
 import { db } from "../../firebaseInit";
 import { setDoc, doc } from "firebase/firestore";
 
@@ -12,32 +10,24 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const {userDetails, setUserDetails} = useUserDetails();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignUpDetail((pv) => ({ ...pv, [name]: value }));
   };
 
-  const addUserToDb =  async (uid) => {
-    // console.log(uid, signUpDetail.email);
-    
-    const docRef = doc(db, 'users', uid);
-    await setDoc(docRef, {userEmail: signUpDetail.email, cartItems:[]})
-    // console.log('user created successfully in fs');
-    
-  }
+  const addUserToDb = async (uid) => {
+    const docRef = doc(db, "users", uid);
+    await setDoc(docRef, { userEmail: signUpDetail.email, cartItems: [] });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const obj = await handleSignUp(signUpDetail);
     // setUserDetails({uid:obj.res, uemail:signUpDetail.email});
-    // console.log(userDetails);
-    
 
-    if (obj.status==='success') {
-      // console.log(error);
+    if (obj.status === "success") {
       await addUserToDb(obj.res._tokenResponse.localId);
       setSignUpDetail({ email: "", password: "" });
       alert("user Created successfully");
@@ -49,7 +39,7 @@ const SignUp = () => {
   return (
     <div className="form_wrapper">
       <form className="form_container" onSubmit={handleSubmit}>
-        <h2 className="heading">SignUp Form</h2>
+        <h2 className="heading">Sign up Form</h2>
         <input
           type="email"
           placeholder="email"

@@ -4,9 +4,12 @@ import { useCartItems } from "../../cartContext";
 
 const Cart = () => {
   const { cartItems, getCartItems, emptyCart } = useCartItems();
-    useEffect(() => {
-      getCartItems();
-    }, []);
+
+  //fetches all the products in the user's cart from firestore at component mount
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
   const len = cartItems.length;
   let totalAmount = 0;
   if (len) {
@@ -15,10 +18,11 @@ const Cart = () => {
     }, 0);
   }
 
+  //emptys the cart on successful checkout
   const handleBuy = () => {
     emptyCart();
-    alert('Your Purchase was completed, Thanks');
-  }
+    alert("Your Purchase was completed, Thanks");
+  };
 
   return (
     <div className="container cart_cont">
@@ -33,7 +37,9 @@ const Cart = () => {
           </div>
           <div className="checkout_div">
             Total Amount: ${Math.round(totalAmount)}
-            <button className="buy_btn" onClick={handleBuy}>Buy</button>
+            <button className="buy_btn" onClick={handleBuy}>
+              Buy
+            </button>
           </div>
         </div>
       )}

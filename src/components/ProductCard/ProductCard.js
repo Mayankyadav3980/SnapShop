@@ -1,27 +1,14 @@
-import React, { useState } from "react";
-import { useUserDetails } from "../../userContext";
+import React from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { GrSubtractCircle } from "react-icons/gr";
 import { useCartItems } from "../../cartContext";
 
 const ProductCard = ({ details }) => {
-  const { userDetails, setUserDetails } = useUserDetails();
   const { removeProductFromCart, addProductToCart, handleProductQuantity } =
     useCartItems();
-  const [prdtCount, setPrdtCount] = useState(1);
 
   if (!details) return;
   const { id, name, price, rating, img, inCart, qty } = details;
-  // console.log(qty);
-  
-
-  const handleAddToCart = () => {
-    addProductToCart(id);
-  };
-
-  const handleRemoveFromCart = () => {
-    removeProductFromCart(id);
-  };
 
   return (
     <div className="card_cont">
@@ -54,14 +41,14 @@ const ProductCard = ({ details }) => {
           {inCart ? (
             <button
               className="btn btn-light shop_btn"
-              onClick={handleRemoveFromCart}
+              onClick={() => removeProductFromCart(id)}
             >
               Remove from Cart
             </button>
           ) : (
             <button
               className="btn btn-light shop_btn"
-              onClick={handleAddToCart}
+              onClick={() => addProductToCart(id)}
             >
               Add to Cart
             </button>
