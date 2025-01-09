@@ -3,9 +3,15 @@ import { handleSignUp } from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebaseInit";
 import { setDoc, doc } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../redux/reducers/userReducer";
+import { addUserToDb } from "../../redux/reducers/userReducer";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const [signUpDetail, setSignUpDetail] = useState({
     email: "",
     password: "",
@@ -16,19 +22,23 @@ const SignUp = () => {
     setSignUpDetail((pv) => ({ ...pv, [name]: value }));
   };
 
-  const addUserToDb = async (uid) => {
-    const docRef = doc(db, "users", uid);
-    await setDoc(docRef, { userEmail: signUpDetail.email, cartItems: [] });
-  };
+  // const addUserToDb = async (uid) => {
+  //   const docRef = doc(db, "users", uid);
+  //   await setDoc(docRef, { userEmail: signUpDetail.email, cartItems: [] });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // dispatch(setUserDetails(signUpDetail));
     const obj = await handleSignUp(signUpDetail);
     // setUserDetails({uid:obj.res, uemail:signUpDetail.email});
 
     if (obj.status === "success") {
-      await addUserToDb(obj.res._tokenResponse.localId);
+      dispatch(
+        addUserToDb([obj.res._tokenResponse.localId, signUpDetail.email])
+      );
+      dispatch(setUserDetails([obj.res._tokenResponse.localId, signUpDetail.email, signUpDetail.password]));
+      // await addUserToDb(obj.res._tokenResponse.localId, signUpDetail.email);
       setSignUpDetail({ email: "", password: "" });
       alert("user Created successfully");
       navigate("/signin");
