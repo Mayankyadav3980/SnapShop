@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebaseInit";
 
-const initialState = { userDetails:{ uId:'', email:'', password:''}};
+const initialState = { userDetails:{ uId:'', uEmail:'', uPassword:''}};
 
 export const addUserToDb = createAsyncThunk('user/addUserToDb', async ([uid, email], thunkAPI)=>{
     const docRef = doc(db, 'users', uid);
@@ -15,10 +15,11 @@ const userSlice = createSlice({
     initialState,
     reducers:{
         setUserDetails:(state, action)=>{
+            const { uId, uEmail, uPassword } = action.payload;
             state.userDetails = {
-                uId: action.payload[0],
-                email: action.payload[1],
-                password: action.payload[2],
+                uId,
+                uEmail,
+                uPassword,
             }
         }
     },

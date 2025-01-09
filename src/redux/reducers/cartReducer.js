@@ -13,8 +13,10 @@ const initialState = { cartItems: [] };
 
 export const getCartItems = createAsyncThunk(
   "cart/getCartItems",
-  async (payload) => {
-    const docRef = doc(db, "users", payload.uId);
+  async (payload, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const uId = state.userReducer.userDetails.uId;
+    const docRef = doc(db, "users", uId);
     onSnapshot(docRef, (doc) => {
       const cart = doc.data().cartItems;
       return cart; 

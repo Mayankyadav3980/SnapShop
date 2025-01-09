@@ -37,7 +37,7 @@ const SignUp = () => {
       dispatch(
         addUserToDb([obj.res._tokenResponse.localId, signUpDetail.email])
       );
-      dispatch(setUserDetails([obj.res._tokenResponse.localId, signUpDetail.email, signUpDetail.password]));
+      dispatch(setUserDetails({ uId:obj.res._tokenResponse.localId, uEmail: signUpDetail.email, uPassword: signUpDetail.password}));
       // await addUserToDb(obj.res._tokenResponse.localId, signUpDetail.email);
       setSignUpDetail({ email: "", password: "" });
       alert("user Created successfully");

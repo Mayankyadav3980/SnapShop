@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../auth";
-import { useUserDetails } from "../../userContext";
+// import { useUserDetails } from "../../userContext";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../redux/reducers/userReducer";
 
 const SignIn = ({ setIsUserLoggedIn }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signInDetail, setsignInDetail] = useState({
     email: "",
     password: "",
   });
 
-  const { setUserDetails } = useUserDetails();
+  // const { setUserDetails } = useUserDetails();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = await handleSignIn(signInDetail);
 
     if (obj.status) {
-      setUserDetails({
+      dispatch( setUserDetails({
         uId: obj.res,
         uEmail: signInDetail.email,
-      });
+      }) )
+      
       setIsUserLoggedIn(true);
       navigate("/Home");
     } else alert("Invalid Credential, Please try agian");

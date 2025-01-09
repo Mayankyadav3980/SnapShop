@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { products } from "../../data";
-import { useCartItems } from "../../cartContext";
+// import { useCartItems } from "../../cartContext";
+import { useDispatch } from "react-redux";
+import { getCartItems, isProductInCart } from "../../redux/reducers/cartReducer";
 
 const Home = () => {
-  const { getCartItems, isProductInCart } = useCartItems();
+  // const { getCartItems, isProductInCart } = useCartItems();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getCartItems();
+   dispatch(getCartItems());
   }, []);
 
   return (
