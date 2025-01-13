@@ -1,11 +1,12 @@
 import React from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { GrSubtractCircle } from "react-icons/gr";
-import { useCartItems } from "../../cartContext";
+// import { useCartItems } from "../../cartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProductFromCart, addProductToCart, handleProductQuantity } from "../../redux/reducers/cartReducer";
 
 const ProductCard = ({ details }) => {
-  const { removeProductFromCart, addProductToCart, handleProductQuantity } =
-    useCartItems();
+  const dispatch = useDispatch();
 
   if (!details) return;
   const { id, name, price, rating, img, inCart, qty } = details;
@@ -26,12 +27,16 @@ const ProductCard = ({ details }) => {
           {inCart && (
             <div className="prdt_count">
               <GrSubtractCircle
-                onClick={() => handleProductQuantity("dec", id)}
+                onClick={() =>
+                  dispatch(handleProductQuantity({ opt: "dec", pId: id }))
+                }
                 className="inc_icon"
               />
               <p>{qty}</p>
               <IoMdAddCircleOutline
-                onClick={() => handleProductQuantity("inc", id)}
+                onClick={() =>
+                  dispatch(handleProductQuantity({ opt: "inc", pId: id }))
+                }
                 className="inc_icon"
               />
             </div>
@@ -41,14 +46,15 @@ const ProductCard = ({ details }) => {
           {inCart ? (
             <button
               className="btn btn-light shop_btn"
-              onClick={() => removeProductFromCart(id)}
+              onClick={() => dispatch(removeProductFromCart({ pId: id }))}
             >
               Remove from Cart
             </button>
           ) : (
             <button
               className="btn btn-light shop_btn"
-              onClick={() => addProductToCart(id)}
+              onClick={() => {dispatch(addProductToCart({ pId: id }));}
+              }
             >
               Add to Cart
             </button>

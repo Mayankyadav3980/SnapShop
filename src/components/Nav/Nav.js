@@ -1,17 +1,22 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { useCartItems } from "../../cartContext";
+// import { useCartItems } from "../../cartContext";
+import { useSelector } from "react-redux";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineLogin } from "react-icons/ai";
 
 const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
-  const { cartItems } = useCartItems();
+  // const state = useSelector(state => state);
+  // console.log(state);
+  
+  const { cartItems } = useSelector(state => state.cartReducer);
+  // const { cartItems } = useCartItems();
   return (
     <>
       <nav>
-        <h3 className="brand_name">CloudMart</h3>
+        <h3 className="brand_name">SnapShop</h3>
         <div className="nav_items">
           {isUserLoggedIn && (
             <span className="item">

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../redux/reducers/userReducer";
 import { addUserToDb } from "../../redux/reducers/userReducer";
 
-const SignUp = () => {
+export const SignUp = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -78,4 +78,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+// export default SignUp;

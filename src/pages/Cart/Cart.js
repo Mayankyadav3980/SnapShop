@@ -7,7 +7,11 @@ import { getCartItems, addProductToCart, removeProductFromCart, handleProductQua
 
 const Cart = () => {
   const dispatch = useDispatch();
+  
+  // const state = useSelector((state) => state);
+  // console.log('state:',state);
   const { cartItems } = useSelector(state => state.cartReducer)
+  // const cartItems=[]
   // const { cartItems, getCartItems, emptyCart } = useCartItems();
 
   //fetches all the products in the user's cart from firestore at component mount

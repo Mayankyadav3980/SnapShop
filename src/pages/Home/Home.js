@@ -2,35 +2,47 @@ import React, { useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { products } from "../../data";
 // import { useCartItems } from "../../cartContext";
-import { useDispatch } from "react-redux";
-import { getCartItems, isProductInCart } from "../../redux/reducers/cartReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../../redux/reducers/cartReducer";
 
 const Home = () => {
   // const { getCartItems, isProductInCart } = useCartItems();
   const dispatch = useDispatch();
+  const { cartItems } = useSelector(state => state.cartReducer);
+  // console.log(cartItems);
+  // let cartItems=[];
+  
+
+  //checking if product displayed on homepage is in user's cart or not
+  const isProductInCart = (prdt) => {
+    const product = cartItems.find((p) => p.id === prdt.id);
+    return product;
+  };
 
   useEffect(() => {
-   dispatch(getCartItems());
+    dispatch(getCartItems());
   }, []);
 
   return (
-    <div className=" home_container">
-      <div className=" container cards_container">
-        {products.map((p, idx) => {
-          const cartPrdt = isProductInCart(p);
+    <>
+      <div className=" home_container">
+        <div className=" container cards_container">
+          {products.map((p, idx) => {
+            const cartPrdt = isProductInCart(p);
 
-          return (
-            <>
-              {cartPrdt ? (
-                <ProductCard key={idx} details={cartPrdt} />
-              ) : (
-                <ProductCard key={idx} details={p} />
-              )}
-            </>
-          );
-        })}
+            return (
+              <>
+                {cartPrdt ? (
+                  <ProductCard key={idx} details={cartPrdt} />
+                ) : (
+                  <ProductCard key={idx} details={p} />
+                )}
+              </>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
