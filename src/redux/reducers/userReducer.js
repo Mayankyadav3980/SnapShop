@@ -1,22 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebaseInit";
+import { toast } from "react-toastify";
 
 const initialState = {
   userDetails: {
-    uId: "HkbWjbSQgCY4lMxqc4cBEsAP7g52",
+    uId: "",
     uEmail: "",
     uPassword: "",
   },
 };
-
 
 export const addUserToDb = createAsyncThunk(
   "user/addUserToDb",
   async ([uid, email], thunkAPI) => {
     const docRef = doc(db, "users", uid);
     await setDoc(docRef, { userEmail: email, cartItems: [] });
-    return thunkAPI.fulfillWithValue("success");
   }
 );
 
@@ -34,9 +33,13 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addUserToDb.fulfilled, (state, action) => {
-      console.log("user added to db successfully");
-    });
+    builder
+      .addCase(addUserToDb.fulfilled, (state, action) => {
+        toast.success("user signed up successfully");
+      })
+      .addCase(addUserToDb.rejected, (state, action) => {
+        toast.error("Something went wrong");
+      });
   },
 });
 

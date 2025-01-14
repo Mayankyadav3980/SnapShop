@@ -8,28 +8,16 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseInit";
 import { products } from "../../data";
-// import { store } from "../store";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const initialState = { cartItems: [] };
-// const GetId = ()=>{
-// const userDetails = useSelector(state =>state.userDetails);
-// console.log("userD", userDetails);
-// uId= userDetails.uId;
-// }
-// GetId();
 
-// const state = store.getState();
-// const { uId } = state.userSlice.userDetails;
-// const uId = null;
-
+//gets the cart items form firestore
 export const getCartItems = createAsyncThunk(
   "cart/getCartItems",
   async (payload, thunkAPI) => {
-    // console.log('uid',uId);
-
     const state = thunkAPI.getState();
-    const {uId} = state.userReducer.userDetails;
+    const { uId } = state.userReducer.userDetails;
     const docRef = doc(db, "users", uId);
     onSnapshot(docRef, (doc) => {
       const cart = doc.data().cartItems;
@@ -37,6 +25,8 @@ export const getCartItems = createAsyncThunk(
     });
   }
 );
+
+//add product to cart
 export const addProductToCart = createAsyncThunk(
   "cart/addProductToCart",
   async (payload, thunkAPI) => {
@@ -47,8 +37,11 @@ export const addProductToCart = createAsyncThunk(
     await updateDoc(docRef, {
       cartItems: arrayUnion({ ...prdt, inCart: true, qty: 1 }),
     });
+    toast.success("Product added to cart successfully");
   }
 );
+
+//removes product from cart
 export const removeProductFromCart = createAsyncThunk(
   "cart/removeProductFromCart",
   async (payload, thunkAPI) => {
@@ -61,41 +54,37 @@ export const removeProductFromCart = createAsyncThunk(
     await updateDoc(docRef, {
       cartItems: arrayRemove(prdt),
     });
+    toast.success("Product removed from cart successfully");
   }
 );
+
+//handles increase/ decrease of product quantity on user click
 export const handleProductQuantity = createAsyncThunk(
   "cart/handleProductQuantity",
   async (payload, thunkAPI) => {
-    console.log('inside hpq', payload.opt, payload.pId);
-    
     const state = thunkAPI.getState();
-    console.log("state:",state);
-    const {cartItems} = state.cartReducer;
+    const { cartItems } = state.cartReducer;
     const { uId } = state.userReducer.userDetails;
 
-    
-    
     const prdtIndex = cartItems.findIndex((p) => p.id === payload.pId);
     const prdt = cartItems[prdtIndex];
     let newCart = [...cartItems];
     let newPrdt = prdt;
-      if (payload.opt === "inc") {
-        newPrdt = { ...prdt, qty: prdt.qty + 1 };
-      } else if (prdt.qty > 1) {
-        newPrdt = { ...prdt, qty: prdt.qty - 1 };
-      }
-      newCart.splice(prdtIndex, 1, newPrdt);
-      console.log('newCart',newCart, newPrdt);
+    if (payload.opt === "inc") {
+      newPrdt = { ...prdt, qty: prdt.qty + 1 };
+    } else if (prdt.qty > 1) {
+      newPrdt = { ...prdt, qty: prdt.qty - 1 };
+    }
+    newCart.splice(prdtIndex, 1, newPrdt);
 
     const docRef = doc(db, "users", uId);
     await updateDoc(docRef, {
       cartItems: newCart,
     });
-    
   }
 );
 
-
+//handles cart items on successfull purchase
 export const emptyCart = createAsyncThunk(
   "cart/emptyCart",
   async (payload, thunkAPI) => {
@@ -105,6 +94,7 @@ export const emptyCart = createAsyncThunk(
     await updateDoc(docRef, {
       cartItems: [],
     });
+    toast.success("Your order was placed successfully, Thanks!");
   }
 );
 
@@ -117,21 +107,17 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCartItems.fulfilled, (state, action) => {
-      // state.cartItems = action.payload;
-      // console.log("in extraReducer", action);
-    });
+    builder.addCase(getCartItems.fulfilled, (state, action) => {});
 
-    builder.addCase(handleProductQuantity.fulfilled, (state, action) => {
-      console.log("qty successfully updated", action.payload);
-    }).addCase(handleProductQuantity.rejected, (state, action)=>{
-      console.log('qty update rejected');
-      
-    });
+    builder
+      .addCase(handleProductQuantity.fulfilled, (state, action) => {
+        console.log("qty successfully updated", action.payload);
+      })
+      .addCase(handleProductQuantity.rejected, (state, action) => {
+        console.log("qty update rejected");
+      });
   },
 });
-
-// console.log("cartSice:", cartSlice.reducer);
 
 export const cartReducer = cartSlice.reducer;
 export const cartActions = cartSlice.actions;

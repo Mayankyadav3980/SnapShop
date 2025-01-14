@@ -1,9 +1,12 @@
 import React from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { GrSubtractCircle } from "react-icons/gr";
-// import { useCartItems } from "../../cartContext";
-import { useDispatch, useSelector } from "react-redux";
-import { removeProductFromCart, addProductToCart, handleProductQuantity } from "../../redux/reducers/cartReducer";
+import { useDispatch } from "react-redux";
+import {
+  removeProductFromCart,
+  addProductToCart,
+  handleProductQuantity,
+} from "../../redux/reducers/cartReducer";
 
 const ProductCard = ({ details }) => {
   const dispatch = useDispatch();
@@ -53,8 +56,9 @@ const ProductCard = ({ details }) => {
           ) : (
             <button
               className="btn btn-light shop_btn"
-              onClick={() => {dispatch(addProductToCart({ pId: id }));}
-              }
+              onClick={() => {
+                dispatch(addProductToCart({ pId: id }));
+              }}
             >
               Add to Cart
             </button>

@@ -1,33 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleSignIn } from "../../auth";
-// import { useUserDetails } from "../../userContext";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../redux/reducers/userReducer";
+import { toast } from "react-toastify";
 
 const SignIn = ({ setIsUserLoggedIn }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signInDetail, setsignInDetail] = useState({
-    email: "aaa@g.com",
-    password: "aaaaaa",
+    email: "",
+    password: "",
   });
-
-  // const { setUserDetails } = useUserDetails();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = await handleSignIn(signInDetail);
 
     if (obj.status) {
-      dispatch( setUserDetails({
-        uId: obj.res,
-        uEmail: signInDetail.email,
-      }) )
-      
+      dispatch(
+        setUserDetails({
+          uId: obj.res,
+          uEmail: signInDetail.email,
+        })
+      );
+
       setIsUserLoggedIn(true);
+      toast.success("Sign In success");
       navigate("/Home");
-    } else alert("Invalid Credential, Please try agian");
+    } else toast.error("Invalid Credential, Please try agian");
   };
 
   const handleChange = (e) => {

@@ -1,18 +1,14 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-// import { useCartItems } from "../../cartContext";
 import { useSelector } from "react-redux";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineLogin } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
-  // const state = useSelector(state => state);
-  // console.log(state);
-  
-  const { cartItems } = useSelector(state => state.cartReducer);
-  // const { cartItems } = useCartItems();
+  const { cartItems } = useSelector((state) => state.cartReducer);
   return (
     <>
       <nav>
@@ -21,7 +17,7 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
           {isUserLoggedIn && (
             <span className="item">
               <NavLink to="/home" className="nav_link">
-                <FaHome />
+                <FaHome className="nav_icon" />
                 Home
               </NavLink>
             </span>
@@ -30,12 +26,14 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
           {isUserLoggedIn && (
             <span className="item">
               <NavLink to="/cart" className="nav_link">
-                <FaShoppingCart />
+                <span className="nav_icon">
+                  <FaShoppingCart />
+                  <span style={{ fontSize: "0.9rem" }}>
+                    {cartItems.length > 0 && cartItems.length}
+                  </span>
+                </span>
                 Cart{" "}
               </NavLink>
-              <span style={{ fontSize: "0.9rem" }}>
-                {cartItems.length > 0 && cartItems.length}
-              </span>
             </span>
           )}
 
@@ -43,14 +41,14 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
             <>
               <span className="item">
                 <NavLink to="/" className="nav_link">
-                  <AiOutlineLogin />
+                  <AiOutlineLogin className="nav_icon" />
                   SignUp
                 </NavLink>
               </span>
 
               <span className="item">
                 <NavLink to="/signin" className="nav_link">
-                  <BiLogIn />
+                  <BiLogIn className="nav_icon" />
                   SignIn
                 </NavLink>
               </span>
@@ -61,10 +59,11 @@ const Nav = ({ isUserLoggedIn, setIsUserLoggedIn }) => {
             <span
               onClick={() => {
                 setIsUserLoggedIn(false);
+                toast.success("Signed out successfully");
               }}
               className="nav_link item"
             >
-              <BiLogOut />
+              <BiLogOut className="nav_icon" />
               SignOut
             </span>
           )}

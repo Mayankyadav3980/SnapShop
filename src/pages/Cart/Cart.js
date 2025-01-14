@@ -1,18 +1,12 @@
 import React, { useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { useCartItems } from "../../cartContext";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions } from "../../redux/reducers/cartReducer";
-import { getCartItems, addProductToCart, removeProductFromCart, handleProductQuantity, emptyCart } from "../../redux/reducers/cartReducer";
+import { getCartItems, emptyCart } from "../../redux/reducers/cartReducer";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  
-  // const state = useSelector((state) => state);
-  // console.log('state:',state);
-  const { cartItems } = useSelector(state => state.cartReducer)
-  // const cartItems=[]
-  // const { cartItems, getCartItems, emptyCart } = useCartItems();
+
+  const { cartItems } = useSelector((state) => state.cartReducer);
 
   //fetches all the products in the user's cart from firestore at component mount
   useEffect(() => {
@@ -30,7 +24,6 @@ const Cart = () => {
   //emptys the cart on successful checkout
   const handleBuy = () => {
     dispatch(emptyCart());
-    alert("Your Purchase was completed, Thanks");
   };
 
   return (
