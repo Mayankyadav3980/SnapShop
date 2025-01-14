@@ -9,8 +9,8 @@ const SignIn = ({ setIsUserLoggedIn }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signInDetail, setsignInDetail] = useState({
-    email: "",
-    password: "",
+    email: "aaa@g.com",
+    password: "aaaaaa",
   });
 
   // const { setUserDetails } = useUserDetails();
@@ -45,6 +45,7 @@ const SignIn = ({ setIsUserLoggedIn }) => {
           name="email"
           id="email"
           onChange={handleChange}
+          value={signInDetail.email}
           required
         />
         <input
@@ -53,6 +54,7 @@ const SignIn = ({ setIsUserLoggedIn }) => {
           name="password"
           id="password"
           onChange={handleChange}
+          value={signInDetail.password}
           required
         />
         <div style={{ textAlign: "center" }}>

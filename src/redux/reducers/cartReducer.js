@@ -66,37 +66,36 @@ export const removeProductFromCart = createAsyncThunk(
 export const handleProductQuantity = createAsyncThunk(
   "cart/handleProductQuantity",
   async (payload, thunkAPI) => {
-    console.log('inside hpq');
+    console.log('inside hpq', payload.opt, payload.pId);
     
     const state = thunkAPI.getState();
     console.log("state:",state);
     const {cartItems} = state.cartReducer;
     const { uId } = state.userReducer.userDetails;
-    console.log(cartItems, uId);
 
-    const docRef = doc(db, "users", uId);
+    
+    
     const prdtIndex = cartItems.findIndex((p) => p.id === payload.pId);
     const prdt = cartItems[prdtIndex];
-    let newCart = cartItems;
+    let newCart = [...cartItems];
     let newPrdt = prdt;
+      if (payload.opt === "inc") {
+        newPrdt = { ...prdt, qty: prdt.qty + 1 };
+      } else if (prdt.qty > 1) {
+        newPrdt = { ...prdt, qty: prdt.qty - 1 };
+      }
+      newCart.splice(prdtIndex, 1, newPrdt);
+      console.log('newCart',newCart, newPrdt);
 
-    if (payload.opt === "inc") newPrdt = { ...prdt, qty: prdt.qty + 1 };
-    else if (prdt.qty > 1) newPrdt = { ...prdt, qty: prdt.qty - 1 };
-
-    newCart.splice(prdtIndex, 1, newPrdt);
-    try{
-       const res = await updateDoc(docRef, {
+    const docRef = doc(db, "users", uId);
+    await updateDoc(docRef, {
       cartItems: newCart,
     });
-    }catch(e){
-      console.log('qty update req failed:', e);
-      
-    }
-   
-    // return thunkAPI.fulfillWithValue(res);
-    // return res;
+    
   }
 );
+
+
 export const emptyCart = createAsyncThunk(
   "cart/emptyCart",
   async (payload, thunkAPI) => {
@@ -124,7 +123,7 @@ const cartSlice = createSlice({
     });
 
     builder.addCase(handleProductQuantity.fulfilled, (state, action) => {
-      console.log("qty successfully updated");
+      console.log("qty successfully updated", action.payload);
     }).addCase(handleProductQuantity.rejected, (state, action)=>{
       console.log('qty update rejected');
       

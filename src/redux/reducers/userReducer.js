@@ -2,7 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebaseInit";
 
-const initialState = { userDetails: { uId: "", uEmail: "", uPassword: "" } };
+const initialState = {
+  userDetails: {
+    uId: "HkbWjbSQgCY4lMxqc4cBEsAP7g52",
+    uEmail: "",
+    uPassword: "",
+  },
+};
+
 
 export const addUserToDb = createAsyncThunk(
   "user/addUserToDb",

@@ -13,7 +13,7 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   const router = createBrowserRouter([
     {
